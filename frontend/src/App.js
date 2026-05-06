@@ -21,6 +21,10 @@ function App() {
 
   console.log("IS AUTH:", isAuth);
 
+  if (!isAuth) {
+    return <Auth setIsAuth={setIsAuth} />;
+  }
+
   const fetchTasks = async () => {
     try {
       console.log("FETCH START");
@@ -201,10 +205,6 @@ function App() {
         )}
       </div>
     );
-  }
-
-  if (!isAuth) {
-    return <Auth setIsAuth={setIsAuth} />;
   }
 
   const user = JSON.parse(localStorage.getItem("user")) || "user";
