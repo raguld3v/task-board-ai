@@ -9,7 +9,7 @@ import {
   useDraggable,
 } from "@dnd-kit/core";
 
-const socket = io("http://localhost:8000");
+const socket = io("https://task-board-ai-vrvh.onrender.com");
 
 function App() {
   const [tasks, setTasks] = useState([]);
