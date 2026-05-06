@@ -42,7 +42,7 @@ function App() {
       socket.on("taskUpdated", fetchTasks);
       return () => socket.off("taskUpdated");
     }
-  }, []);
+  }, [isAuth]);
 
   // ADD TASK
   const addTask = async () => {
