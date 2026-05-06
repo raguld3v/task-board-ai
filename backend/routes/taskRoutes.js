@@ -13,11 +13,11 @@ router.get("/", auth, async (req, res) => {
 // CREATE
 router.post("/", auth, async (req, res) => {
   const task = await Task.create({
-    title: req.body.title,
-    description: req.body.description,
-    position: req.body.position || 0,
-    status: "todo", // ✅ REQUIRED
-    user: req.user.id, // ✅ REQUIRED
+    title,
+    description,
+    status: "todo",
+    position,
+    user: req.user.id, // ✅ IMPORTANT
   });
 
   res.json(task);
