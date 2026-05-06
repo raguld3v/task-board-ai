@@ -42,6 +42,15 @@ function App() {
     return () => socket.off("taskUpdated");
   }, []);
 
+  useEffect(() => {
+    if (!isAuth) {
+      fetchTasks();
+
+      socket.on("taskUpdated", fetchTasks);
+      return () => socket.off("taskUpdated");
+    }
+  }, [isAuth]);
+
   // ADD TASK
   const addTask = async () => {
     if (!title) return;
