@@ -29,19 +29,19 @@ function App() {
 
       console.log("TASKS:", res.data);
 
-      setTasks(res.data);
+      if (isAuth) {
+        setTasks(res.data);
+      }
     } catch (err) {
       console.log("FETCH ERROR:", err.response?.data || err.message);
     }
   };
 
   useEffect(() => {
-    if (isAuth) {
-      fetchTasks();
+    fetchTasks();
 
-      socket.on("taskUpdated", fetchTasks);
-      return () => socket.off("taskUpdated");
-    }
+    socket.on("taskUpdated", fetchTasks);
+    return () => socket.off("taskUpdated");
   }, []);
 
   // ADD TASK
