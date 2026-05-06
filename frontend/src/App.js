@@ -54,6 +54,7 @@ function App() {
       position: tasks.length,
     });
 
+    fetchTasks();
     setTitle("");
     setDescription("");
   };
