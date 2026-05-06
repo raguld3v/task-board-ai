@@ -17,7 +17,8 @@ function App() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-  const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
+  // const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
+  const [isAuth, setIsAuth] = useState(null);
 
   console.log("IS AUTH:", isAuth);
 
@@ -29,20 +30,33 @@ function App() {
 
       console.log("TASKS:", res.data);
 
-      if (isAuth) {
-        setTasks(res.data);
-      }
+      setTasks(res.data);
     } catch (err) {
       console.log("FETCH ERROR:", err.response?.data || err.message);
     }
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isAuth) return; // ⛔ stop if not logged in
+
     fetchTasks();
 
     socket.on("taskUpdated", fetchTasks);
-    return () => socket.off("taskUpdated");
-  }, []);
+
+    return () => {
+      socket.off("taskUpdated", fetchTasks);
+    };
+  }, [isAuth]);
 
   // ADD TASK
   const addTask = async () => {
@@ -207,6 +221,10 @@ function App() {
 
   if (!isAuth) {
     return <Auth setIsAuth={setIsAuth} />;
+  }
+
+  if (isAuth === null) {
+    return <div className="text-white p-5">Loading...</div>;
   }
 
   const user = JSON.parse(localStorage.getItem("user")) || "user";
