@@ -36,11 +36,13 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    if (isAuth) {
+      fetchTasks();
 
-    socket.on("taskUpdated", fetchTasks);
-    return () => socket.off("taskUpdated");
-  }, []);
+      socket.on("taskUpdated", fetchTasks);
+      return () => socket.off("taskUpdated");
+    }
+  }, [isAuth]);
 
   // ADD TASK
   const addTask = async () => {
