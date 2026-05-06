@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://task-board-ai-vrvh.onrender.com/",
+  baseURL: "https://task-board-ai-vrvh.onrender.com/api", // ✅ FIX
 });
 
+// attach token
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
 

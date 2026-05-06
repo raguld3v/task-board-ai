@@ -15,7 +15,11 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://task-board-ai-six.vercel.app", // ✅ NO /
+  })
+);
 app.use(express.json());
 
 // Make io accessible
