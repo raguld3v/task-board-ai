@@ -11,7 +11,7 @@ const server = http.createServer(app);
 // Socket setup
 const io = new Server(server, {
   cors: {
-    origin: "https://task-board-ai-six.vercel.app",
+    origin: "*",
   },
 });
 
